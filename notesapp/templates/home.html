@@ -1,0 +1,143 @@
+<html>
+<head>
+    <title>Notes App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a001a; /* Dark purple background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(200, 100, 255, 0.3);
+            box-shadow: 0px 0px 10px rgba(200, 100, 255, 0.5);
+            border-bottom: 2px solid rgba(200, 100, 255, 0.5);
+        }
+
+        h1 {
+            color: #e6ccff; /* Light purple text */
+            text-shadow: 0px 0px 10px rgba(230, 204, 255, 0.8); /* Glowing text */
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap; /* Allows notes to be adjacent */
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            width: 90%;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #a866ff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 18px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            background-color: #357ABD;
+        }
+
+        .note {
+            border: 1px solid rgba(200, 100, 255, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            background-color: rgba(200, 100, 255, 0.2); /* Light purple box */
+            width: 300px; /* Fixed width for better alignment */
+            color: white;
+            box-shadow: 0px 0px 10px rgba(200, 100, 255, 0.5);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .note:hover {
+            transform: translateY(-5px); /* Small bounce effect */
+        }
+
+        .note h2, .note p, .note strong {
+            color: white; /* Title, content, and tags in white */
+        }
+
+        .note a {
+            margin-right: 10px;
+            font-size: 16px;
+            padding: 6px 12px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .edit {
+            background-color: #4A90E2;
+        }
+
+        .edit:hover {
+            background-color: #357ABD;
+        }
+
+        .delete {
+            background-color: red;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .delete:hover {
+            background-color: darkred;
+        }
+
+        .tags {
+            display: inline-block;
+            background-color: #C71585;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>📝 Notes App</h1>
+        <a href="{% url 'create' %}">➕ Add Note</a>
+    </div>
+
+    <div class="container">
+        {% for note in data %}
+        <div class="note">
+            {% if note.tags %}
+            <p class="tags">🏷️ {{ note.tags|title }}</p>
+            {% endif %}
+            
+            <h2>{{ note.title }}</h2>
+            <p>{{ note.content }}</p>
+
+            <p style="color: white; font-size:15px">
+                🕒 {{ note.dt|date:"F d, Y - h:i A" }} 
+            </p> 
+
+            <a href="{% url 'edit' note.id %}" class="edit">✏️ Edit</a>
+            <a href="{% url 'delete' note.id %}" class="delete" onclick="return confirm('Are you sure you want to delete this note?');">🗑️ Delete</a>
+        </div>
+        {% empty %}
+        <p style="color: white;">No notes found. Start by adding a new note!</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

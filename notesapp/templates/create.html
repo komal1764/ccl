@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a001a; /* Dark purple background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            background: rgba(240, 200, 255, 0.1); /* Light purple transparent */
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(160, 100, 255, 0.8); /* Glow effect */
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(200, 100, 255, 0.5);
+	    width:60%;
+        }
+
+        h1 {
+            color: #e6ccff; /* Light purple text */
+            text-shadow: 0px 0px 10px rgba(230, 204, 255, 0.8); /* Glowing text */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start; /* Align labels & fields properly */
+        }
+
+        label {
+            font-size: 18px;
+            color: #ffffff; /* PURE WHITE text */
+            text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.8); /* Soft Glow */
+        }
+
+       input, textarea {
+            font-size: 16px;
+            width: 98%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: inset 0px 0px 10px rgba(160, 100, 255, 0.4);
+	    resize:none;
+
+        }
+
+        /* Dropdown styling */
+        select {
+            font-size: 16px;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.9); /* Light background */
+            color: black; /* Black font */
+            box-shadow: inset 0px 0px 10px rgba(160, 100, 255, 0.4);
+        }
+
+
+        button {
+            background-color: #a866ff; /* Light purple */
+            color: black;
+            border: none;
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0px 0px 15px rgba(160, 100, 255, 0.8);
+	    width:100%;
+        }
+
+        button:hover {
+            background-color: #c299ff;
+            box-shadow: 0px 0px 20px rgba(200, 150, 255, 1);
+        }
+
+        a {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #e6ccff;
+            text-shadow: 0px 0px 10px rgba(230, 204, 255, 0.8);
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📝 Create a New Note</h1> 
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <label for="title">📌 Title:</label>
+        <input type="text" id="title" name="title" placeholder="Enter your note title..." required>
+
+        <label for="content">📝 Content:</label>
+        <textarea id="content" name="content" rows="4" placeholder="Write your note here..." required></textarea>
+
+        <label for="tags">🏷️ Select Tag:</label>
+        <select name="tags" id="tags">
+
+            <option value="work">💼 Work</option>
+            <option value="personal">👤 Personal</option>
+            <option value="home">🏠 Home</option>
+        </select>
+
+        <button type="submit">💾 Save Note</button> 
+    </form>
+
+    <a href="{% url 'home' %}">⬅️ Back to Home</a> 
+</div>
+
+</body>
+</html>
